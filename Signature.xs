@@ -81,7 +81,7 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 		return op;
 	}
 
-	if (!isSPACE (s[4])) {
+	if (!isSPACE (s[3])) {
 		return op;
 	}
 
