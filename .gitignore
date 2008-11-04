@@ -1,0 +1,17 @@
+.*
+!.gitignore
+Signature.*
+!Signature.xs
+!Signature.pm
+Makefile*
+!Makefile.PL
+META.yml
+blib
+build
+inc
+pm_to_blib
+MANIFEST*
+!MANIFEST.SKIP
+Debian*
+README
+Sub-Signature-*
