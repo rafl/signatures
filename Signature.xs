@@ -49,9 +49,10 @@ qualify_func_name (const char *s) {
 
 STATIC OP *
 handle_proto (pTHX_ OP *op, void *user_data) {
-	SV *op_sv, *name;
-	char *s, *tmp, *tmp2, *proto;
-	char tmpbuf[sizeof (PL_tokenbuf)];
+	OP *ret;
+	SV *op_sv, *name, *old_lex_stuff;
+	char *s, *tmp, *tmp2;
+	char tmpbuf[sizeof (PL_tokenbuf)], proto[sizeof (PL_tokenbuf)];
 	STRLEN retlen = 0;
 	userdata_t *ud = (userdata_t *)user_data;
 
@@ -111,7 +112,7 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 	}
 
 	tmp = hook_toke_scan_str (aTHX_ s);
-	proto = hook_parser_get_lex_stuff (aTHX);
+	strcpy (proto, hook_parser_get_lex_stuff (aTHX));
 	hook_parser_clear_lex_stuff (aTHX);
 
 	if (s == tmp || !proto) {
@@ -135,15 +136,59 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 		s++;
 	}
 
+	ret = NULL;
+
 	s = hook_toke_skipspace (aTHX_ s + 1);
+	if (s[0] == ':') {
+		s++;
+		while (s[0] != '{') {
+			s = hook_toke_skipspace (aTHX_ s);
+			char *attr_start = s;
+			(void)hook_toke_scan_word (aTHX_ (s - SvPVX (PL_linestr)), 0, tmpbuf, sizeof (tmpbuf), &retlen);
+
+			if (!tmpbuf) {
+				return op;
+			}
+
+			s += retlen;
+			if (s[0] == '(') {
+				tmp = hook_toke_scan_str (aTHX_ s);
+				tmp2 = hook_parser_get_lex_stuff (aTHX);
+				hook_parser_clear_lex_stuff (aTHX);
+
+				if (s == tmp) {
+					return op;
+				}
+
+				s += strlen (tmp2);
+			}
+
+			if (strEQ (tmpbuf, "proto")) {
+				while (attr_start < tmp) {
+					*attr_start = ' ';
+					attr_start++;
+				}
+
+				ret = op;
+				sv_setpv (op_sv, tmp2);
+			}
+
+			s = hook_toke_skipspace(aTHX_ s);
+		}
+	}
+
 	if (s[0] != '{') {
+		/* croak as we already messed with op when :proto is given? */
 		return op;
 	}
 
 	call_to_perl (ud->class, s - hook_parser_get_linestr (aTHX), proto);
 
-	op_free (op);
-	return NULL;
+	if (!ret) {
+		op_free (op);
+	}
+
+	return ret;
 }
 
 MODULE = Sub::Signature  PACKAGE = Sub::Signature
@@ -161,6 +206,7 @@ setup (class, f_class)
 		ud->class = newSVsv (class);
 		ud->f_class = f_class;
 	CODE:
+		hook_parser_setup ();
 		RETVAL = (UV)hook_op_check (OP_CONST, handle_proto, ud);
 	OUTPUT:
 		RETVAL
