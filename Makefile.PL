@@ -8,14 +8,14 @@ all_from 'lib/Sub/Signature.pm';
 
 requires 'parent';
 requires 'B::Hooks::OP::Check' => '0.11';
-requires 'B::Hooks::Parser' => '0.03';
+requires 'B::Hooks::Parser' => '0.04';
 
 build_requires 'B::Hooks::OP::Check' => '0.11';
-build_requires 'B::Hooks::Parser' => '0.03';
+build_requires 'B::Hooks::Parser' => '0.04';
 
 configure_requires 'ExtUtils::Depends';
 configure_requires 'B::Hooks::OP::Check' => '0.11';
-configure_requires 'B::Hooks::Parser' => '0.03';
+configure_requires 'B::Hooks::Parser' => '0.04';
 
 my $pkg = ExtUtils::Depends->new('Sub::Signature', 'B::Hooks::OP::Check', 'B::Hooks::Parser');
 $pkg->add_xs('Signature.xs');
