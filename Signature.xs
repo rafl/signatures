@@ -113,15 +113,17 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 	}
 
 	tmp = hook_toke_scan_str (aTHX_ s);
-	strcpy (proto, hook_parser_get_lex_stuff (aTHX));
+	tmp2 = hook_parser_get_lex_stuff (aTHX);
 	hook_parser_clear_lex_stuff (aTHX);
 
-	if (s == tmp || !proto) {
+	if (s == tmp || !tmp2) {
 		return op;
 	}
 
+	strncpy (proto, s + 1, tmp - s - 2);
+	proto[tmp - s - 2] = '\0';
+
 	s++;
-	tmp2 = proto;
 
 	while (tmp > s + 1) {
 		if (isSPACE (s[0])) {
