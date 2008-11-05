@@ -174,6 +174,10 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 			}
 
 			s = hook_toke_skipspace(aTHX_ s);
+
+            if (s[0] == ':') {
+                s++;
+            }
 		}
 	}
 
