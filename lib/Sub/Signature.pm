@@ -162,6 +162,17 @@ C<$offset> within the current line perl is parsing and extracted C<$prototype>.
 The default implementation calls C<proto_unwrap> with the prototype and passes
 the returned value and the offset to C<inject>.
 
+=head1 TODO
+
+=over 4
+
+=item prototypes aren't checked for validity yet
+
+You won't get a warning for invalid prototypes using the C<proto> attribute,
+like you normally would with warnings enabled.
+
+=back
+
 =head1 SEE ALSO
 
 L<Method::Signatures>
