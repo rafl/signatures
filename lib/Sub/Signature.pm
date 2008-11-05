@@ -100,6 +100,28 @@ Sub::Signature - subroutine signatures with no source filter
         return $bar + $baz;
     }
 
+=head1 DESCRIPTION
+
+One of the strongest complaints about Perl is its poor argument handling.
+Simply passing everything in the @_ array is a serious limitation. This module
+aims to rectify that.
+
+With this module, we an specify subroutine signatures and have variables
+automatically defined within the subroutine.
+
+For example, you can write
+
+    sub square ($num) {
+        return $num * $num;
+    }
+
+and it will automatically turned into the following at compile time:
+
+    sub square {
+        my ($num) = @_;
+        return $num * $num;
+    }
+
 =head1 METHODS
 
 =head2 proto_unwrap ($prototype)
