@@ -11,6 +11,7 @@
 typedef struct userdata_St {
 	char *f_class;
 	SV *class;
+	hook_op_check_id parser_id;
 } userdata_t;
 
 STATIC void
@@ -210,7 +211,7 @@ setup (class, f_class)
 		ud->class = newSVsv (class);
 		ud->f_class = f_class;
 	CODE:
-		hook_parser_setup ();
+		ud->parser_id = hook_parser_setup ();
 		RETVAL = (UV)hook_op_check (OP_CONST, handle_proto, ud);
 	OUTPUT:
 		RETVAL
@@ -224,6 +225,7 @@ teardown (class, id)
 		ud = (userdata_t *)hook_op_check_remove (OP_CONST, id);
 
 		if (ud) {
+			hook_parser_teardown (ud->parser_id);
 			SvREFCNT_dec (ud->class);
 			Safefree (ud);
 		}
