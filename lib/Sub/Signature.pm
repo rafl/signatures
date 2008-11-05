@@ -154,7 +154,7 @@ string, if no prototype is given.
 Inserts a C<$code> string into the line perl currently parses at the given
 C<$offset>.
 
-=head2 callback (offset, $prototype)
+=head2 callback ($offset, $prototype)
 
 This gets called as soon as a sub definition is encountered. Arguments are the
 C<$offset> within the current line perl is parsing and extracted C<$prototype>.
