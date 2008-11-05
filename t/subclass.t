@@ -16,6 +16,6 @@ use Test::More tests => 1;
 
 BEGIN { CustomSignature->import }
 
-sub foo (aieee) { $prototype }
+sub foo (affe tiger) { $prototype }
 
-is(foo(), 'aieee', 'overriding proto_unwrap');
+is(foo(), 'affe tiger', 'overriding proto_unwrap');
