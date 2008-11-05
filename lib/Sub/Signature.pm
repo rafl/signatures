@@ -122,6 +122,20 @@ and it will automatically turned into the following at compile time:
         return $num * $num;
     }
 
+Note that, although the syntax is very similar, the signatures provided by this
+module are not to be confused with the prototypes described in L<perlsub>. All
+this module does is turning a prototype containing a list of variables into
+
+    my (${proto}) = @_;
+
+and injects that into the function body. No argument validation is done at
+runtime.
+
+If you want to combine sub signatures with regular prototypes a C<proto>
+attribute exists:
+
+    sub foo ($bar, $baz) : proto($$) { ... }
+
 =head1 METHODS
 
 =head2 proto_unwrap ($prototype)
