@@ -162,16 +162,19 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 				}
 
 				s += strlen (tmp2);
-			}
 
-			if (strEQ (tmpbuf, "proto")) {
-				while (attr_start < tmp) {
-					*attr_start = ' ';
-					attr_start++;
+				if (strEQ (tmpbuf, "proto")) {
+					while (attr_start < tmp) {
+						*attr_start = ' ';
+						attr_start++;
+					}
+
+					ret = op;
+					sv_setpv (op_sv, tmp2);
 				}
-
-				ret = op;
-				sv_setpv (op_sv, tmp2);
+			}
+			else if (strEQ (tmpbuf, "proto")) {
+				croak ("proto attribute requires argument");
 			}
 
 			s = hook_toke_skipspace(aTHX_ s);
