@@ -6,8 +6,8 @@ use Sub::Signature;
 
 sub foo ($bar) { $bar }
 
-sub korv ($wurst, $affe, $birne) {
-    return "${wurst}-${affe}-${birne}";
+sub korv ($wurst, undef, $birne) {
+    return "${wurst}-${birne}";
 }
 
 sub array ($scalar, @array) {
@@ -21,7 +21,7 @@ sub hash (%hash) {
 sub Name::space ($moo) { $moo }
 
 is(foo('baz'), 'baz');
-is(korv(qw/a b c/), 'a-b-c');
+is(korv(qw/a b c/), 'a-c');
 is(array(10, 1..10), 20);
 is_deeply(
     [sort(hash(foo => 1, bar => 2))],
