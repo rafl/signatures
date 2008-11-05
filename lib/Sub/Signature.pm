@@ -85,3 +85,31 @@ sub inject {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+Sub::Signature - subroutine signatures with no source filter
+
+=head1 SYNOPSIS
+
+    use Sub::Signature;
+
+    sub foo ($bar, $baz) {
+        return $bar + $baz;
+    }
+
+=head1 AUTHOR
+
+Florian Ragwitz E<lt>rafl@debian.orgE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (c) 2008  Florian Ragwitz
+
+This module is free software.
+
+You may distribute it under the same license as Perl itself.
+
+=cut
