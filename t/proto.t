@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 7;
+use Test::More tests => 8;
 
 use vars qw/@warnings/;
 BEGIN { $SIG{__WARN__} = sub { push @warnings, @_ } }
@@ -39,3 +39,6 @@ BEGIN {
         );
     }
 }
+
+eval 'sub foo ($bar) : proto { $bar }';
+like($@, qr/proto attribute requires argument/);
