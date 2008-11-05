@@ -72,6 +72,7 @@ sub callback {
 
 sub proto_unwrap {
     my ($class, $proto) = @_;
+    return '' unless length $proto;
     return "my ($proto) = \@_;";
 }
 
