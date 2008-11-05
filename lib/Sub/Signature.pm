@@ -187,6 +187,10 @@ L<Perl6::Parameters>
 
 Florian Ragwitz E<lt>rafl@debian.orgE<gt>
 
+=head1 THANKS
+
+Moritz Lenz for documentation review and improvement.
+
 =head1 COPYRIGHT AND LICENSE
 
 Copyright (c) 2008  Florian Ragwitz
