@@ -122,6 +122,20 @@ C<$offset> within the current line perl is parsing and extracted C<$prototype>.
 The default implementation calls C<proto_unwrap> with the prototype and passes
 the returned value and the offset to C<inject>.
 
+=head1 SEE ALSO
+
+L<Method::Signatures>
+
+L<MooseX::Method::Signatures>
+
+L<Sub::Signatures>
+
+L<Attribute::Signature>
+
+L<Perl6::Subs>
+
+L<Perl6::Parameters>
+
 =head1 AUTHOR
 
 Florian Ragwitz E<lt>rafl@debian.orgE<gt>
