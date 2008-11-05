@@ -124,7 +124,7 @@ and it will automatically turned into the following at compile time:
 
 Note that, although the syntax is very similar, the signatures provided by this
 module are not to be confused with the prototypes described in L<perlsub>. All
-this module does is turning a prototype containing a list of variables into
+this module does is turning a list of parameters into
 
     my (${proto}) = @_;
 
