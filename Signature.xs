@@ -51,7 +51,7 @@ qualify_func_name (const char *s) {
 STATIC OP *
 handle_proto (pTHX_ OP *op, void *user_data) {
 	OP *ret;
-	SV *op_sv, *name, *old_lex_stuff;
+	SV *op_sv, *name;
 	char *s, *tmp, *tmp2;
 	char tmpbuf[sizeof (PL_tokenbuf)], proto[sizeof (PL_tokenbuf)];
 	STRLEN retlen = 0;
@@ -92,7 +92,7 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 	if (strNE (SvPVX (PL_subname), "?")) {
 		(void)hook_toke_scan_word (aTHX_ (s - SvPVX (PL_linestr)), 1, tmpbuf, sizeof (tmpbuf), &retlen);
 
-		if (!tmpbuf) {
+		if (retlen < 1) {
 			return op;
 		}
 
@@ -149,7 +149,7 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 			char *attr_start = s;
 			(void)hook_toke_scan_word (aTHX_ (s - SvPVX (PL_linestr)), 0, tmpbuf, sizeof (tmpbuf), &retlen);
 
-			if (!tmpbuf) {
+			if (retlen < 1) {
 				return op;
 			}
 
