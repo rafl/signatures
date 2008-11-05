@@ -6,7 +6,6 @@ use ExtUtils::Depends;
 name 'Sub-Signature';
 all_from 'lib/Sub/Signature.pm';
 
-requires 'parent';
 requires 'B::Hooks::OP::Check' => '0.11';
 requires 'B::Hooks::Parser' => '0.04';
 

@@ -5,7 +5,7 @@ use Test::More tests => 1;
 {
     package CustomSignature;
 
-    use parent qw/Sub::Signature/;
+    use base qw/Sub::Signature/;
 
     use Sub::Signature;
 
