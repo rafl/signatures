@@ -138,6 +138,10 @@ attribute exists:
 
 =head1 METHODS
 
+If you want subroutine signatures doing something that this module doesn't
+provide, like argument validation, typechecking and similar, you can subclass
+it override the following methods.
+
 =head2 proto_unwrap ($prototype)
 
 Turns the extracted C<$prototype> into code.
