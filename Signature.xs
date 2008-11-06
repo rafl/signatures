@@ -150,8 +150,9 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 	if (s[0] == ':') {
 		s++;
 		while (s[0] != '{') {
+			char *attr_start;
 			s = hook_toke_skipspace (aTHX_ s);
-			char *attr_start = s;
+			attr_start = s;
 			(void)hook_toke_scan_word (aTHX_ (s - SvPVX (PL_linestr)), 0, tmpbuf, sizeof (tmpbuf), &retlen);
 
 			if (retlen < 1) {
