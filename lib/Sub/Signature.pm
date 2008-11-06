@@ -105,7 +105,7 @@ Sub::Signature - subroutine signatures with no source filter
 This module aims to rectify the default simple @_ array argument
 handling.
 
-With this module, we an specify subroutine signatures and have variables
+With this module, we aan specify subroutine signatures and have variables
 automatically defined within the subroutine.
 
 For example, you can write
@@ -135,7 +135,7 @@ attribute exists:
 
 If you want subroutine signatures doing something that this module doesn't
 provide, like argument validation, typechecking and similar, you can subclass
-it override the following methods.
+it and override the following methods.
 
 =head2 proto_unwrap ($prototype)
 
