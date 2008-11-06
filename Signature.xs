@@ -5,6 +5,11 @@
 #define NEED_PL_parser
 #include "ppport.h"
 
+/* this should go into ppport */
+#if PERL_BCDVERSION >= 0x5009005
+#define PL_oldbufptr D_PPP_my_PL_parser_var(oldbufptr)
+#endif
+
 #include "hook_op_check.h"
 #include "hook_parser.h"
 
@@ -76,7 +81,7 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 	}
 
 	/* sub $name */
-	s = PL_parser->oldbufptr;
+	s = PL_oldbufptr;
 	s = hook_toke_skipspace (aTHX_ s);
 
 	if (strnNE (s, "sub", 3)) {
