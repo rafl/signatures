@@ -114,7 +114,7 @@ For example, you can write
         return $num * $num;
     }
 
-and it will automatically turned into the following at compile time:
+and it will be automatically turned into the following at compile time:
 
     sub square {
         my ($num) = @_;
