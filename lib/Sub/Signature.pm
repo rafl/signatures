@@ -102,9 +102,8 @@ Sub::Signature - subroutine signatures with no source filter
 
 =head1 DESCRIPTION
 
-One of the strongest complaints about Perl is its poor argument handling.
-Simply passing everything in the @_ array is a serious limitation. This module
-aims to rectify that.
+This module aims to rectify the default simple @_ array argument
+handling.
 
 With this module, we an specify subroutine signatures and have variables
 automatically defined within the subroutine.
@@ -148,12 +147,13 @@ string, if no prototype is given.
 =head2 inject ($offset, $code)
 
 Inserts a C<$code> string into the line perl currently parses at the given
-C<$offset>.
+C<$offset>. This is only called by the C<callback> method.
 
 =head2 callback ($offset, $prototype)
 
-This gets called as soon as a sub definition is encountered. Arguments are the
-C<$offset> within the current line perl is parsing and extracted C<$prototype>.
+This gets called as soon as a sub definition with a prototype is
+encountered. Arguments are the C<$offset> within the current line perl
+is parsing and extracted C<$prototype>.
 
 The default implementation calls C<proto_unwrap> with the prototype and passes
 the returned value and the offset to C<inject>.
@@ -189,7 +189,8 @@ Florian Ragwitz E<lt>rafl@debian.orgE<gt>
 
 =head1 THANKS
 
-Moritz Lenz for documentation review and improvement.
+Moritz Lenz and Steffen Schwigon for documentation review and
+improvement.
 
 =head1 COPYRIGHT AND LICENSE
 
