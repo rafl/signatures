@@ -7,23 +7,23 @@ use vars qw/@warnings/;
 BEGIN { $SIG{__WARN__} = sub { push @warnings, $_ } }
 
 {
-    use Sub::Signature;
+    use signatures;
     sub foo ($x) { }
 }
 
-BEGIN { is(@warnings, 0, 'no prototype warnings with Sub::Signature in scope') }
+BEGIN { is(@warnings, 0, 'no prototype warnings with signatures in scope') }
 
 sub bar ($x) { }
 
-BEGIN { is(@warnings, 1, 'warning without Sub::Signature in scope') }
+BEGIN { is(@warnings, 1, 'warning without signatures in scope') }
 
-use Sub::Signature;
+use signatures;
 
 sub baz ($x) { }
 
 BEGIN { is(@warnings, 1, 'no more warnings') }
 
-no Sub::Signature;
+no signatures;
 
 sub corge ($x) { }
 

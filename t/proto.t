@@ -7,7 +7,7 @@ BEGIN { $SIG{__WARN__} = sub { push @warnings, @_ } }
 
 BEGIN { is(@warnings, 0, 'no warnings yet') }
 
-use Sub::Signature;
+use signatures;
 
 sub with_proto ($x, $y, $z) : proto($$$) {
     return $x + $y + $z;

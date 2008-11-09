@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::More tests => 2;
 
-use Sub::Signature;
+use signatures;
 
   sub
    foo

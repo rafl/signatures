@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-package Sub::Signature;
+package signatures;
 
 use XSLoader;
 use B::Hooks::Parser;
@@ -93,11 +93,11 @@ __END__
 
 =head1 NAME
 
-Sub::Signature - subroutine signatures with no source filter
+signatures - subroutine signatures with no source filter
 
 =head1 SYNOPSIS
 
-    use Sub::Signature;
+    use signatures;
 
     sub foo ($bar, $baz) {
         return $bar + $baz;

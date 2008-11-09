@@ -5,4 +5,4 @@ blib\b
 ^Makefile$
 ^Makefile.old$
 ^Debian
-^Sub-Signature-
+^signature-

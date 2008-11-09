@@ -5,9 +5,9 @@ use Test::More tests => 1;
 {
     package CustomSignature;
 
-    use base qw/Sub::Signature/;
+    use base qw/signatures/;
 
-    use Sub::Signature;
+    use signatures;
 
     sub proto_unwrap ($class, $prototype) {
         return "my (\$prototype) = '$prototype';";

@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::More tests => 1;
 
-use Sub::Signature;
+use signatures;
 
 my $foo = sub ($bar, $baz) { return "${bar}-${baz}" };
 

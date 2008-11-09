@@ -3,8 +3,8 @@ use warnings;
 use inc::Module::Install;
 use ExtUtils::Depends;
 
-name 'Sub-Signature';
-all_from 'lib/Sub/Signature.pm';
+name 'signatures';
+all_from 'lib/signatures.pm';
 
 requires 'B::Hooks::OP::Check' => '0.11';
 requires 'B::Hooks::Parser' => '0.06';
@@ -16,9 +16,9 @@ configure_requires 'ExtUtils::Depends';
 configure_requires 'B::Hooks::OP::Check' => '0.11';
 configure_requires 'B::Hooks::Parser' => '0.06';
 
-my $pkg = ExtUtils::Depends->new('Sub::Signature', 'B::Hooks::OP::Check', 'B::Hooks::Parser');
-$pkg->add_xs('Signature.xs');
-$pkg->add_pm('lib/Sub/Signature.pm' => '$(INST_LIB)/Sub/Signature.pm');
+my $pkg = ExtUtils::Depends->new('signatures', 'B::Hooks::OP::Check', 'B::Hooks::Parser');
+$pkg->add_xs('signatures.xs');
+$pkg->add_pm('lib/signatures.pm' => '$(INST_LIB)/signatures.pm');
 
 makemaker_args($pkg->get_makefile_vars);
 

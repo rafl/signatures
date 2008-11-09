@@ -296,7 +296,7 @@ handle_eval (pTHX_ OP *op, void *user_data) {
 	return op;
 }
 
-MODULE = Sub::Signature  PACKAGE = Sub::Signature
+MODULE = signatures  PACKAGE = signatures
 
 PROTOTYPES: DISABLE
 
