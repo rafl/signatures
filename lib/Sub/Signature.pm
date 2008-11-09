@@ -105,9 +105,6 @@ Sub::Signature - subroutine signatures with no source filter
 
 =head1 DESCRIPTION
 
-This module aims to rectify the default simple @_ array argument
-handling.
-
 With this module, we can specify subroutine signatures and have variables
 automatically defined within the subroutine.
 
@@ -128,6 +125,8 @@ Note that, although the syntax is very similar, the signatures provided by this
 module are not to be confused with the prototypes described in L<perlsub>. All
 this module does is extracting items of @_ and assigning them to the variables
 in the parameter list. No argument validation is done at runtime.
+
+The signature definition needs to be on a single line only.
 
 If you want to combine sub signatures with regular prototypes a C<proto>
 attribute exists:
