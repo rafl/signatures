@@ -105,7 +105,7 @@ Sub::Signature - subroutine signatures with no source filter
 This module aims to rectify the default simple @_ array argument
 handling.
 
-With this module, we aan specify subroutine signatures and have variables
+With this module, we can specify subroutine signatures and have variables
 automatically defined within the subroutine.
 
 For example, you can write
