@@ -22,4 +22,6 @@ $pkg->add_pm('lib/signatures.pm' => '$(INST_LIB)/signatures.pm');
 
 makemaker_args($pkg->get_makefile_vars);
 
+extra_tests();
+
 WriteAll;
