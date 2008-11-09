@@ -94,6 +94,10 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 		return op;
 	}
 
+	if (!enabled (ud->class)) {
+		return op;
+	}
+
 	if (!PL_parser) {
 		return op;
 	}
