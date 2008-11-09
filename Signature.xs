@@ -13,6 +13,10 @@
 #include "hook_op_check.h"
 #include "hook_parser.h"
 
+#include "ptable.h"
+
+STATIC PTABLE_t *op_map = NULL;
+
 typedef struct userdata_St {
 	char *f_class;
 	SV *class;
@@ -240,3 +244,16 @@ teardown (class, id)
 			SvREFCNT_dec (ud->class);
 			Safefree (ud);
 		}
+
+void
+END ()
+	CODE:
+		PTABLE_free (op_map);
+		op_map = NULL;
+
+BOOT:
+	op_map = PTABLE_new();
+
+	if (!op_map) {
+		croak ("Can't initialize op map");
+	}
