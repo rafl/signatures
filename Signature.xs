@@ -10,6 +10,10 @@
 #define PL_oldbufptr D_PPP_my_PL_parser_var(oldbufptr)
 #endif
 
+#if PERL_REVISION == 5 && PERL_VERSION >= 10
+#define HAS_HINTS_HASH
+#endif
+
 #include "hook_op_check.h"
 #include "hook_parser.h"
 
@@ -20,8 +24,14 @@ STATIC PTABLE_t *op_map = NULL;
 typedef struct userdata_St {
 	char *f_class;
 	SV *class;
+	hook_op_check_id eval_hook;
 	hook_op_check_id parser_id;
 } userdata_t;
+
+typedef struct evaldata_St {
+	SV *class;
+	Perl_ppaddr_t ppaddr;
+} evaldata_t;
 
 STATIC void
 call_to_perl (SV *class, UV offset, char *proto) {
@@ -239,6 +249,53 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 	return ret;
 }
 
+STATIC OP *
+run_eval (pTHX) {
+	dSP;
+	SV *sv, **stack;
+	evaldata_t *eval = (evaldata_t *)PTABLE_fetch (op_map, PL_op);
+
+#ifdef HAS_HINTS_HASH
+	if (PL_op->op_private & OPpEVAL_HAS_HH) {
+		stack = &SP[-1];
+	}
+	else {
+		stack = &SP[0];
+	}
+#else
+	stack = &SP[0];
+#endif
+
+	sv = *stack;
+
+	if (SvPOK (sv)) {
+		/* FIXME: this leaks the new scalar */
+		SV *new = newSVpvs ("use ");
+		sv_catsv (new, eval->class);
+		sv_catpvs (new, ";");
+		sv_catsv (new, sv);
+		*stack = new;
+	}
+
+	CALL_FPTR (eval->ppaddr)(aTHX);
+}
+
+STATIC OP *
+handle_eval (pTHX_ OP *op, void *user_data) {
+	evaldata_t *eval;
+	userdata_t *ud = (userdata_t *)user_data;
+
+	if (enabled (ud->class)) {
+		Newx (eval, 1, evaldata_t);
+		eval->ppaddr = op->op_ppaddr;
+		eval->class = newSVsv (ud->class);
+		PTABLE_store (op_map, op, eval);
+		op->op_ppaddr = run_eval;
+	}
+
+	return op;
+}
+
 MODULE = Sub::Signature  PACKAGE = Sub::Signature
 
 PROTOTYPES: DISABLE
@@ -255,6 +312,7 @@ setup (class, f_class)
 		ud->f_class = f_class;
 	CODE:
 		ud->parser_id = hook_parser_setup ();
+		ud->eval_hook = hook_op_check (OP_ENTEREVAL, handle_eval, ud);
 		RETVAL = (UV)hook_op_check (OP_CONST, handle_proto, ud);
 	OUTPUT:
 		RETVAL
@@ -268,6 +326,7 @@ teardown (class, id)
 		ud = (userdata_t *)hook_op_check_remove (OP_CONST, id);
 
 		if (ud) {
+			hook_op_check_remove (OP_ENTEREVAL, ud->eval_hook);
 			hook_parser_teardown (ud->parser_id);
 			SvREFCNT_dec (ud->class);
 			Safefree (ud);
