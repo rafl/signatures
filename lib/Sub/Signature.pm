@@ -34,6 +34,8 @@ sub setup_for {
     my ($class, $caller) = @_;
     my $ret = $class->setup($caller);
 
+    $^H{"${class}::enabled"} = 1;
+
     my $old_warn = $SIG{__WARN__};
     $SIG{__WARN__} = sub {
         if ($_[0] !~ /^Illegal character in prototype for /) {
@@ -58,6 +60,7 @@ sub setup_for {
 
 sub teardown_for {
     my ($class, $data) = @_;
+    delete $^H{"${class}::enabled"};
     $class->teardown($data->[0]);
     $data->[1]->();
     return;
