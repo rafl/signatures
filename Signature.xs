@@ -57,6 +57,30 @@ qualify_func_name (const char *s) {
 	return ret;
 }
 
+STATIC int
+enabled (SV *class) {
+	STRLEN len;
+	char *key;
+	HV *hints = GvHV (PL_hintgv);
+	SV **sv, *tmp = newSVsv (class);
+
+	sv_catpv (tmp, "::enabled");
+	key = SvPV (tmp, len);
+
+	if (!hints) {
+		return 0;
+	}
+
+	sv = hv_fetch (hints, key, len, 0);
+	SvREFCNT_dec (tmp);
+
+	if (!sv || !*sv) {
+		return 0;
+	}
+
+	return SvOK (*sv);
+}
+
 STATIC OP *
 handle_proto (pTHX_ OP *op, void *user_data) {
 	OP *ret;
