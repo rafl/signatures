@@ -160,7 +160,7 @@ is parsing and extracted C<$prototype>.
 The default implementation calls C<proto_unwrap> with the prototype and passes
 the returned value and the offset to C<inject>.
 
-=head1 TODO
+=head1 BUGS
 
 =over 4
 
@@ -168,6 +168,12 @@ the returned value and the offset to C<inject>.
 
 You won't get a warning for invalid prototypes using the C<proto> attribute,
 like you normally would with warnings enabled.
+
+=item you shouldn't alter $SIG{__WARN__} at compile time
+
+After this module is loaded you shouldn't make any changes to C<$SIG{__WARN__}>
+during compile time. Changing it before the module is loaded or at runtime is
+fine.
 
 =back
 
