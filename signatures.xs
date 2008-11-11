@@ -15,11 +15,8 @@
 #endif
 
 #include "hook_op_check.h"
+#include "hook_op_ppaddr.h"
 #include "hook_parser.h"
-
-#include "ptable.h"
-
-STATIC PTABLE_t *op_map = NULL;
 
 typedef struct userdata_St {
 	char *f_class;
@@ -27,11 +24,6 @@ typedef struct userdata_St {
 	hook_op_check_id eval_hook;
 	hook_op_check_id parser_id;
 } userdata_t;
-
-typedef struct evaldata_St {
-	SV *class;
-	Perl_ppaddr_t ppaddr;
-} evaldata_t;
 
 STATIC void
 call_to_perl (SV *class, UV offset, char *proto) {
@@ -250,10 +242,10 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 }
 
 STATIC OP *
-run_eval (pTHX) {
+before_eval (pTHX_ OP *op, void *user_data) {
 	dSP;
 	SV *sv, **stack;
-	evaldata_t *eval = (evaldata_t *)PTABLE_fetch (op_map, PL_op);
+	SV *class = (SV *)user_data;
 
 #ifdef HAS_HINTS_HASH
 	if (PL_op->op_private & OPpEVAL_HAS_HH) {
@@ -271,26 +263,21 @@ run_eval (pTHX) {
 	if (SvPOK (sv)) {
 		/* FIXME: this leaks the new scalar */
 		SV *new = newSVpvs ("use ");
-		sv_catsv (new, eval->class);
+		sv_catsv (new, class);
 		sv_catpvs (new, ";");
 		sv_catsv (new, sv);
 		*stack = new;
 	}
 
-	CALL_FPTR (eval->ppaddr)(aTHX);
+	return op;
 }
 
 STATIC OP *
 handle_eval (pTHX_ OP *op, void *user_data) {
-	evaldata_t *eval;
 	userdata_t *ud = (userdata_t *)user_data;
 
 	if (enabled (ud->class)) {
-		Newx (eval, 1, evaldata_t);
-		eval->ppaddr = op->op_ppaddr;
-		eval->class = newSVsv (ud->class);
-		PTABLE_store (op_map, op, eval);
-		op->op_ppaddr = run_eval;
+		hook_op_ppaddr_around (op, before_eval, NULL, newSVsv (ud->class));
 	}
 
 	return op;
@@ -331,16 +318,3 @@ teardown (class, id)
 			SvREFCNT_dec (ud->class);
 			Safefree (ud);
 		}
-
-void
-END ()
-	CODE:
-		PTABLE_free (op_map);
-		op_map = NULL;
-
-BOOT:
-	op_map = PTABLE_new();
-
-	if (!op_map) {
-		croak ("Can't initialize op map");
-	}

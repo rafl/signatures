@@ -6,6 +6,7 @@ package signatures;
 use XSLoader;
 use B::Hooks::Parser;
 use B::Hooks::OP::Check;
+use B::Hooks::OP::PPAddr;
 use B::Hooks::EndOfScope;
 
 our $VERSION = '0.01';
