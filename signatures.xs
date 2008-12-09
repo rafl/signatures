@@ -219,7 +219,7 @@ handle_proto (pTHX_ OP *op, void *user_data) {
 				croak ("proto attribute requires argument");
 			}
 
-			s = hook_toke_skipspace(aTHX_ s);
+			s = hook_toke_skipspace (aTHX_ s);
 
             if (s[0] == ':') {
                 s++;
