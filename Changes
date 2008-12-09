@@ -1,3 +1,6 @@
+0.03  Tue, 09 Dec 2008 14:35:24 +0100
+  * Suppress a new prototype warning from blead perl.
+
 0.02  Tue, 11 Nov 2008 15:26:33 +0100
   * Port to B::Hooks::OP::PPAddr.
 
