@@ -1,3 +1,10 @@
+0.04  Sun, 19 Apr 2009 12:00:18 +0200
+  * Skip a test for syntax errors in string evals that
+    sometimes makes perl crash.
+  * Add test case for something that used to blow up.
+  * Depend on latest B::Hooks::OP::Check.
+  * Add repository and bugtracker urls to META.yml.
+
 0.03  Tue, 09 Dec 2008 14:35:24 +0100
   * Suppress a new prototype warning from blead perl.
 
