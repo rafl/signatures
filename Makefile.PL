@@ -9,6 +9,7 @@ all_from 'lib/signatures.pm';
 requires 'B::Hooks::OP::Check' => '0.17';
 requires 'B::Hooks::OP::PPAddr';
 requires 'B::Hooks::Parser' => '0.07';
+requires 'B::Hooks::EndOfScope' => '0.08';
 
 build_requires 'B::Hooks::OP::Check' => '0.17';
 build_requires 'B::Hooks::OP::PPAddr';
