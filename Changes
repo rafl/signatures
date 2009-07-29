@@ -1,3 +1,5 @@
+  * Require ExtUtils::Depends 0.302.
+
 0.05  Sun, 19 Apr 2009 19:21:35 +0200
   * Depend on B::Hooks::EndOfScope 0.08 so exceptions
     during compile time that trigger a destructor don't

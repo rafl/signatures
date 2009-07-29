@@ -15,9 +15,12 @@ build_requires 'B::Hooks::OP::Check' => '0.17';
 build_requires 'B::Hooks::OP::PPAddr';
 build_requires 'B::Hooks::Parser' => '0.07';
 
-configure_requires 'ExtUtils::Depends';
-configure_requires 'B::Hooks::OP::Check' => '0.17';
-configure_requires 'B::Hooks::OP::PPAddr';
+# minimum version that works on Win32+gcc
+configure_requires 'ExtUtils::Depends' => '0.302';
+configure_requires 'B::Hooks::OP::Check' => '0.18';
+# minimum version that depends on ExtUtils::Depends 0.302
+configure_requires 'B::Hooks::OP::PPAddr' => '0.03';
+# minimum version that depends on ExtUtils::Depends 0.302
 configure_requires 'B::Hooks::Parser' => '0.07';
 
 my $pkg = ExtUtils::Depends->new('signatures', 'B::Hooks::OP::Check', 'B::Hooks::OP::PPAddr', 'B::Hooks::Parser');
