@@ -9,7 +9,7 @@ use B::Hooks::OP::Check;
 use B::Hooks::OP::PPAddr;
 use B::Hooks::EndOfScope;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 XSLoader::load(__PACKAGE__, $VERSION);
 
